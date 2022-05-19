@@ -11,9 +11,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Update gem
-      run: gem update --system
-    - name: Install dependencies
+    - name: Install bundle
       run: bundle install
+    - name: Update bundler
+      run: bundle update --bundler
+    - name: Install xcbeautify
+      run: brew install xcbeautify
     - name: Run tests
       run: bundle exec fastlane testLane
