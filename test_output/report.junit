@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="1" failures="0">
+    <testsuite name="GitHubActionsTests" tests="1" failures="0" skipped="0" time="0.0011709928512573242">
+        <properties>
+          <property name="Configuration" value="Test Scheme Action"/>
+        </properties>
+        <testcase classname="GitHubActionsTests" name="testExample()" time="0.0011709928512573242">
+        </testcase>
+    </testsuite>
+</testsuites>

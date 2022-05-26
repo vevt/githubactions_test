@@ -10,10 +10,77 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Update gem
-      run: gem update --system
-    - name: Install dependencies
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Install bundle
       run: bundle install
-    - name: Run tests
-      run: bundle exec fastlane testLane
+    - name: Update bundler
+      run: bundle update --bundler
+    - name: Install xcbeautify
+      run: brew install xcbeautify
+    - name: Build
+      run: bundle exec fastlane buildLane
+    - name: Upload build
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: derivedData/Build/Products/Debug-iphonesimulator/GitHubActions.app
+    - name: Upload runner
+      uses: actions/upload-artifact@v3
+      with:
+        name: runner
+        path: derivedData/Build/Products/Debug-iphonesimulator/GitHubActionsUITests-Runner.app
+
+  unitTests:
+
+    needs: build
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Download build
+      uses: actions/download-artifact@v3
+      with:
+        name: build
+        path: derivedData/Build/Products/Debug-iphonesimulator/GitHubActions.app
+    - name: Download runner
+      uses: actions/download-artifact@v3
+      with:
+        name: runner
+        path: derivedData/Build/Products/Debug-iphonesimulator/GitHubActionsUITests-Runner.app
+    - name: Install bundle
+      run: bundle install
+    - name: Update bundler
+      run: bundle update --bundler
+    - name: Install xcbeautify
+      run: brew install xcbeautify
+    - name: Run unit tests
+      run: bundle exec fastlane unitTestLane
+
+  uiTests:
+
+    needs: build
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Download build
+      uses: actions/download-artifact@v3
+      with:
+        name: build
+        path: derivedData/Build/Products/Debug-iphonesimulator/GitHubActions.app
+    - name: Download runner
+      uses: actions/download-artifact@v3
+      with:
+        name: runner
+        path: derivedData/Build/Products/Debug-iphonesimulator/GitHubActionsUITests-Runner.app
+    - name: Install bundle
+      run: bundle install
+    - name: Update bundler
+      run: bundle update --bundler
+    - name: Install xcbeautify
+      run: brew install xcbeautify
+    - name: Run ui tests
+      run: bundle exec fastlane uiTestLane
