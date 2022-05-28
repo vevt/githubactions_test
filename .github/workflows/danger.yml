@@ -5,14 +5,16 @@ on:
     branches: [ develop ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: "Run_Danger"
+  rundanger:
+    
+    runs-on: macos-latest
+    
     steps:
-      - uses: actions/checkout@v3
-      - name: Danger
-        uses: danger/swift@2.0.3
-        with:
-            args: --failOnErrors --no-publish-check
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Install danger
+      run: brew install danger/tap/danger-swift
+    - name: GO Danger
+      run: danger-swift ci
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

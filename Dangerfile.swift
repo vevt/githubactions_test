@@ -2,6 +2,8 @@ import Danger
 let danger = Danger()
 
 message("!!!!Highlight something in the table!!!!!!")
+warn("WARM")
+
 
 // Loop through all new files, then
 let swiftFilesWithCopyright = danger.git.createdFiles.filter {
